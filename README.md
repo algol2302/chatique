@@ -2,7 +2,7 @@
 
 TODO:
 
-- [ ] Create docker environment, see https://testdriven.io/courses/tdd-fastapi/docker-config/
+- [x] Create docker environment, see https://testdriven.io/courses/tdd-fastapi/docker-config/
 - [ ] Add app, models, api and others, see https://github.com/tiangolo/full-stack-fastapi-postgresql
 - [ ] Add websocket chat, see: 
 1. https://fastapi.tiangolo.com/advanced/websockets/ 
