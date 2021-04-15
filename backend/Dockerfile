@@ -2,7 +2,7 @@
 FROM python:3.9.3-slim-buster
 
 # set working directory
-WORKDIR /code
+WORKDIR /code/
 
 ARG ENVIRONMENT
 
@@ -39,4 +39,5 @@ RUN poetry install \
   && if [ "$ENVIRONMENT" = 'prod' ]; then rm -rf "$POETRY_CACHE_DIR"; fi
 
 # add app
-COPY . /code
+COPY ./app /code
+ENV PYTHONPATH=/code/app
