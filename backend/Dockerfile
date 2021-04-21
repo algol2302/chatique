@@ -29,7 +29,7 @@ RUN apt-get update \
   && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 # Copy only requirements, to cache them in docker layer
-COPY ./poetry.lock ./pyproject.toml /code/
+COPY ./app/poetry.lock ./app/pyproject.toml /code/
 
 # Project initialization:
 RUN poetry install \
