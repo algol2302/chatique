@@ -1,10 +1,7 @@
 from fastapi_users.db import SQLAlchemyBaseUserTable
-from sqlalchemy.ext.declarative import DeclarativeMeta, declarative_base
 
-from .mixins import BaseMixin
-
-Base: DeclarativeMeta = declarative_base()
+from db.base_class import Base
 
 
-class User(Base, BaseMixin, SQLAlchemyBaseUserTable):
+class User(Base, SQLAlchemyBaseUserTable):
     pass

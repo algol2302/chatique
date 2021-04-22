@@ -1,7 +1,9 @@
+import os
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
 from core.config import settings
+from db.session import database
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -21,7 +23,27 @@ if settings.BACKEND_CORS_ORIGINS:
         allow_headers=["*"],
     )
 
+# app.include_router(routers.api_router, prefix=settings.API_V1_STR)
+
+
+@app.on_event('startup')
+async def on_startup() -> None:
+    await database.connect()
+
+
+@app.on_event('shutdown')
+async def on_shutdown() -> None:
+    await database.disconnect()
+
+
+DEBUG = os.getenv("DEBUG") == 'True'
+
 
 @app.get("/ping")
 async def pong():
     return {"ping": "pong!"}
+
+
+if __name__ == "__main__" and DEBUG:
+    import uvicorn
+    uvicorn.run("main:app", debug=True, reload=True)
