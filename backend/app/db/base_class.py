@@ -1,12 +1,11 @@
-from typing import Any
-
 from sqlalchemy import Column, DateTime, func
+from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.ext.declarative import as_declarative, declared_attr
 
 
 @as_declarative()
 class Base:
-    id: Any
+    id = Column(UUID(as_uuid=True), primary_key=True)
 
     created_at = Column(
         DateTime,
