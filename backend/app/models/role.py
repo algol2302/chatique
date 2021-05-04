@@ -18,13 +18,13 @@ class Role(Base):
     )
 
     user_id = Column(
-        Integer,
+        pg.UUID(as_uuid=True),
         ForeignKey('user.id'),
         primary_key=True
     )
 
     company_id = Column(
-        Integer,
+        pg.UUID(as_uuid=True),
         ForeignKey('company.id'),
         primary_key=True
     )

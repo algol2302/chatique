@@ -1,8 +1,8 @@
 """Add role table
 
-Revision ID: 5fe344055853
+Revision ID: 848e2b9d521a
 Revises: 3835d3051042
-Create Date: 2021-05-03 23:05:02.444632
+Create Date: 2021-05-05 00:16:39.851893
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = '5fe344055853'
+revision = '848e2b9d521a'
 down_revision = '3835d3051042'
 branch_labels = None
 depends_on = None
@@ -23,9 +23,9 @@ def upgrade():
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.Column('deleted_at', sa.DateTime(), nullable=True),
-    sa.Column('role', postgresql.ARRAY(sa.Enum('OWNER', 'ADMIN', 'USER', name='roles', native_enum=False)), nullable=True),
-    sa.Column('user_id', sa.Integer(), nullable=False),
-    sa.Column('company_id', sa.Integer(), nullable=False),
+    sa.Column('role', postgresql.ARRAY(sa.Enum('OWNER', 'ADMIN', 'USER', name='roles', native_enum=False, create_constraint=False)), nullable=True),
+    sa.Column('user_id', postgresql.UUID(as_uuid=True), nullable=False),
+    sa.Column('company_id', postgresql.UUID(as_uuid=True), nullable=False),
     sa.ForeignKeyConstraint(['company_id'], ['company.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id', 'user_id', 'company_id')
