@@ -21,7 +21,7 @@ class Settings(BaseSettings):
 
     @validator("SQLALCHEMY_DATABASE_URI", pre=True)
     def assemble_db_connection(
-        cls, v: Optional[str], values: Dict[str, Any]
+            cls, v: Optional[str], values: Dict[str, Any]
     ) -> Any:
         if isinstance(v, str):
             return v
@@ -38,7 +38,7 @@ class Settings(BaseSettings):
 
     @validator("BACKEND_CORS_ORIGINS", pre=True)
     def assemble_cors_origins(
-        cls, v: Union[str, List[str]]
+            cls, v: Union[str, List[str]]
     ) -> Union[List[str], str]:
         if isinstance(v, str) and not v.startswith("["):
             return [i.strip() for i in v.split(",")]
