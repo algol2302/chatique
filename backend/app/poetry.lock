@@ -1,4 +1,15 @@
 [[package]]
+name = "aiologger"
+version = "0.6.1"
+description = "Asynchronous logging for python and asyncio"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.extras]
+aiofiles = ["aiofiles (==0.4.0)"]
+
+[[package]]
 name = "alembic"
 version = "1.6.0"
 description = "A database migration tool for SQLAlchemy."
@@ -423,9 +434,12 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "2f201292a8e96e3318d7c023692f2cf831c0fbd771ab5972ef2dd4c7bda5cb3d"
+content-hash = "74b48533428f31940ccb9b2a9b30688823aea46cc4b8180f6e3d3399516de461"
 
 [metadata.files]
+aiologger = [
+    {file = "aiologger-0.6.1.tar.gz", hash = "sha256:1b6b8f00d74a588339b657ff60ffa9f64c53873887a008934c66e1a673ea68cd"},
+]
 alembic = [
     {file = "alembic-1.6.0-py2.py3-none-any.whl", hash = "sha256:d7f6d4dc6abed18e1591932a85349a7d621298ef0daa40021609cdca54a6047c"},
     {file = "alembic-1.6.0.tar.gz", hash = "sha256:3ff4f90d23dd283d7822d78ffbc07cb256344ae1d60500b933378bc13407efcc"},
