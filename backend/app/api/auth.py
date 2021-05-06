@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import Request
 from fastapi_users import FastAPIUsers
 from fastapi_users.authentication import JWTAuthentication
@@ -5,19 +7,24 @@ from fastapi_users.db import SQLAlchemyUserDatabase
 
 from core.config import settings
 from db.session import database
-from schemas.user import User, UserCreate, UserUpdate, UserDB
 from models.user import User as UserModel
+from schemas.user import User, UserCreate, UserUpdate, UserDB
+from sevices.logger import get_logger
 
+logger = get_logger(level=logging.DEBUG)
 
 user_db = SQLAlchemyUserDatabase(UserDB, database, UserModel.__table__)
 
 
 def on_after_register(user: UserDB, request: Request):
-    print(f"User {user.id} has registered.")
+    logger.info(f"User {user.id} has registered.")
 
 
 def on_after_forgot_password(user: UserDB, token: str, request: Request):
-    print(f"User {user.id} has forgot their password. Reset token: {token}")
+    logger.info(
+        f"User {user.id} has forgot their password. "
+        f"Reset token: {token}"
+    )
 
 
 jwt_authentication = JWTAuthentication(
