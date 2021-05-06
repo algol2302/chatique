@@ -27,6 +27,13 @@ def on_after_forgot_password(user: UserDB, token: str, request: Request):
     )
 
 
+def after_verification_request(user: UserDB, token: str, request: Request):
+    logger.info(
+        f"Verification requested for user {user.id}. "
+        f"Verification token: {token}"
+    )
+
+# TODO fix auth
 jwt_authentication = JWTAuthentication(
     secret=settings.SECRET_KEY,
     lifetime_seconds=3600,
@@ -34,5 +41,10 @@ jwt_authentication = JWTAuthentication(
 )
 
 fastapi_users = FastAPIUsers(
-    user_db, [jwt_authentication], User, UserCreate, UserUpdate, UserDB,
+    user_db,
+    [jwt_authentication],
+    User,
+    UserCreate,
+    UserUpdate,
+    UserDB,
 )

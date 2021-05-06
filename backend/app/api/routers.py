@@ -3,6 +3,7 @@ from fastapi import APIRouter
 from api.auth import (
     fastapi_users, jwt_authentication,
     on_after_register, on_after_forgot_password,
+    after_verification_request
 )
 from core.config import settings
 
@@ -20,6 +21,14 @@ api_router.include_router(
 api_router.include_router(
     fastapi_users.get_reset_password_router(
         settings.SECRET_KEY, after_forgot_password=on_after_forgot_password
+    ),
+    prefix="/auth",
+    tags=["auth"],
+)
+api_router.include_router(
+    fastapi_users.get_verify_router(
+        settings.SECRET_KEY,
+        after_verification_request=after_verification_request
     ),
     prefix="/auth",
     tags=["auth"],
