@@ -7,6 +7,7 @@ from pydantic import AnyHttpUrl, BaseSettings, PostgresDsn, validator
 class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
     SECRET_KEY: str = secrets.token_urlsafe(32)
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     PROJECT_NAME: str = "Chatique"
     PROJECT_DESCRIPTION: str = (
         "Author: Alexander Golovnya <algol.mail@gmail.com>"
