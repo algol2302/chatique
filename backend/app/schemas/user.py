@@ -1,10 +1,12 @@
 from typing import Optional
+from uuid import UUID
 
 from pydantic import BaseModel, EmailStr
 
 
 # Shared properties
 class UserBase(BaseModel):
+    id: Optional[UUID] = None
     email: Optional[EmailStr] = None
     is_active: Optional[bool] = True
     is_superuser: bool = False
@@ -22,7 +24,7 @@ class UserUpdate(UserBase):
 
 
 class UserInDBBase(UserBase):
-    id: Optional[int] = None
+    id: Optional[UUID] = None
 
     class Config:
         orm_mode = True
