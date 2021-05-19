@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, Enum, ForeignKey
+from sqlalchemy import Column, Enum, ForeignKey
 import sqlalchemy.dialects.postgresql as pg
 from sqlalchemy.orm import backref, relationship
 
