@@ -7,8 +7,7 @@ Create Date: 2021-04-22 10:18:17.237812
 """
 from alembic import op
 import sqlalchemy as sa
-
-import fastapi_users
+from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
 revision = '90bc49402289'
@@ -23,7 +22,7 @@ def upgrade():
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.Column('deleted_at', sa.DateTime(), nullable=True),
-    sa.Column('id', fastapi_users.db.sqlalchemy.GUID(), nullable=False),
+    sa.Column('id', postgresql.UUID(as_uuid=True), nullable=False),
     sa.Column('email', sa.String(length=320), nullable=False),
     sa.Column('hashed_password', sa.String(length=72), nullable=False),
     sa.Column('is_active', sa.Boolean(), nullable=False),
