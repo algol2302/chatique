@@ -8,7 +8,9 @@ from schemas.company import CompanyCreate, CompanyUpdate
 
 
 class CRUDCompany(CRUDBase[Company, CompanyCreate, CompanyUpdate]):
-    def get_by_name(self, db: Session, *, name: str) -> Optional[Company]:
+
+    @staticmethod
+    def get_by_name(db: Session, *, name: str) -> Optional[Company]:
         return db.query(Company).filter(Company.name == name).first()
 
     def create(self, db: Session, *, obj_in: CompanyCreate) -> Company:
