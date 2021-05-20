@@ -41,6 +41,7 @@ def create_user(
     """
     Create new user.
     """
+    # TODO fix it
     user = crud.user.get_by_email(db, email=user_in.email)
     if user:
         raise HTTPException(
@@ -48,6 +49,15 @@ def create_user(
             detail="The user with this username already exists in the system.",
         )
     user = crud.user.create(db, obj_in=user_in)
+
+    company = crud.company.get_by_name(name=user_in.company)
+    if not company:
+        company = crud.company.create(
+            db=db,
+            obj_in=schemas.CompanyCreate(name=user_in.company)
+        )
+    crud.role.create(db=db, )
+
     # TODO refactor
     # if settings.EMAILS_ENABLED and user_in.email:
     #     send_new_account_email(
