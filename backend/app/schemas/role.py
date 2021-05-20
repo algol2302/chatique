@@ -3,11 +3,15 @@ from uuid import UUID
 
 from pydantic import BaseModel
 
+from constants.role import Roles
+
 
 # Shared properties
 class RoleBase(BaseModel):
     id: Optional[UUID] = None
-    role: int
+    role: Roles
+    company_id: UUID
+    user_id: UUID
 
 
 # Properties to receive via API on creation
