@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Enum, ForeignKey
+from sqlalchemy import Column, ForeignKey
 import sqlalchemy.dialects.postgresql as pg
 from sqlalchemy.orm import backref, relationship
 
@@ -9,13 +9,7 @@ from .company import Company
 
 
 class Role(Base):
-    role = Column(
-        pg.ARRAY(Enum(
-            Roles,
-            create_constraint=False,
-            native_enum=False
-        ))
-    )
+    role = Column(pg.ENUM(Roles), unique=False, nullable=False)
 
     user_id = Column(
         pg.UUID(as_uuid=True),

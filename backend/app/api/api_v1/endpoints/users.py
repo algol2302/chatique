@@ -9,6 +9,7 @@ import crud
 import models
 import schemas
 from api import deps
+from constants.role import Roles
 from core.config import settings
 
 # TODO refactor
@@ -39,9 +40,9 @@ def create_user(
     current_user: models.User = Depends(deps.get_current_active_superuser),
 ) -> Any:
     """
-    Create new user.
+    Create new user by superuser.
+    TODO: refactor for a case that owner or admin add new user to company
     """
-    # TODO fix it
     user = crud.user.get_by_email(db, email=user_in.email)
     if user:
         raise HTTPException(
@@ -101,12 +102,13 @@ def read_user_me(
     return current_user
 
 
-@router.post("/open", response_model=schemas.User)
+@router.post("/sign_up", response_model=schemas.User)
 def create_user_open(
     *,
     db: Session = Depends(deps.get_db),
     password: str = Body(...),
-    email: EmailStr = Body(...)
+    email: EmailStr = Body(...),
+    company_name: str = Body(...)
 ) -> Any:
     """
     Create new user without the need to be logged in.
@@ -116,14 +118,32 @@ def create_user_open(
             status_code=403,
             detail="Open user registration is forbidden on this server",
         )
+
     user = crud.user.get_by_email(db, email=email)
+
     if user:
         raise HTTPException(
             status_code=400,
             detail="The user with this username already exists in the system",
         )
+
     user_in = schemas.UserCreate(password=password, email=email)
     user = crud.user.create(db, obj_in=user_in)
+
+    company = crud.company.get_by_name(db=db, name=company_name)
+    new_company = False
+    if not company:
+        company = crud.company.create(
+            db=db,
+            obj_in=schemas.CompanyCreate(name=company_name)
+        )
+        new_company = True
+
+    role = Roles.OWNER if new_company else Roles.USER
+    role_in = schemas.RoleCreate(role=role, company_id=company.id, user_id=user.id)
+
+    crud.role.create(db=db, obj_in=role_in)
+
     return user
 
 
