@@ -1,7 +1,7 @@
 from typing import Optional
 from uuid import UUID
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from constants.role import Roles
 
@@ -9,9 +9,12 @@ from constants.role import Roles
 # Shared properties
 class RoleBase(BaseModel):
     id: Optional[UUID] = None
-    role: Roles
+    role: Roles = Roles.USER
     company_id: UUID
     user_id: UUID
+
+    class Config:
+        use_enum_values = True
 
 
 # Properties to receive via API on creation
