@@ -127,17 +127,23 @@ def create_user_open(
             detail="The user with this username already exists in the system",
         )
 
-    user_in = schemas.UserCreate(password=password, email=email)
-    user = crud.user.create(db, obj_in=user_in)
-
     company = crud.company.get_by_name(db=db, name=company_name)
     new_company = False
+    is_superuser = False
     if not company:
         company = crud.company.create(
             db=db,
             obj_in=schemas.CompanyCreate(name=company_name)
         )
         new_company = True
+        is_superuser = True
+
+    user_in = schemas.UserCreate(
+        password=password,
+        email=email,
+        is_superuser=is_superuser
+    )
+    user = crud.user.create(db, obj_in=user_in)
 
     role = Roles.OWNER if new_company else Roles.USER
     role_in = schemas.RoleCreate(role=role, company_id=company.id, user_id=user.id)
