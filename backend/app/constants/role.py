@@ -1,6 +1,6 @@
 # https://fastapi.tiangolo.com/tutorial/path-params/#working-with-python-enumerations
 
-from enum import Enum, unique
+from enum import Enum
 
 
 class Roles(str, Enum):

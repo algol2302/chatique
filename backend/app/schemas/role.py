@@ -1,7 +1,7 @@
 from typing import Optional
 from uuid import UUID
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 from constants.role import Roles
 
@@ -15,6 +15,7 @@ class RoleBase(BaseModel):
 
     class Config:
         use_enum_values = True
+        orm_mode = True
 
 
 # Properties to receive via API on creation

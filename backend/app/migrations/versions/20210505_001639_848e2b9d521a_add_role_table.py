@@ -23,7 +23,7 @@ def upgrade():
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.Column('deleted_at', sa.DateTime(), nullable=True),
-    sa.Column('role', postgresql.ARRAY(sa.Enum('OWNER', 'ADMIN', 'USER', name='roles', native_enum=False, create_constraint=False)), nullable=True),
+    sa.Column('role', sa.String(length=5), nullable=False),
     sa.Column('user_id', postgresql.UUID(as_uuid=True), nullable=False),
     sa.Column('company_id', postgresql.UUID(as_uuid=True), nullable=False),
     sa.ForeignKeyConstraint(['company_id'], ['company.id'], ),
