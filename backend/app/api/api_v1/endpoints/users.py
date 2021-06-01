@@ -113,6 +113,8 @@ def create_user_open(
     """
     Create new user without the need to be logged in.
     """
+    
+    # TODO to think about removing business logic to services
     if not settings.USERS_OPEN_REGISTRATION:
         raise HTTPException(
             status_code=403,
