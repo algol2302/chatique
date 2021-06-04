@@ -1,6 +1,10 @@
-from fastapi import APIRouter, WebSocket
+from fastapi import APIRouter, Depends
+from fastapi import WebSocket
 from fastapi.responses import HTMLResponse
-from starlette import responses
+from sqlalchemy.orm import Session
+
+import models
+from api import deps
 
 router = APIRouter()
 
@@ -40,8 +44,15 @@ html = """
 
 
 @router.get("/")
-async def get():
-    return HTMLResponse(html)
+async def get(
+        db: Session = Depends(deps.get_db),
+        current_user: models.User = Depends(deps.get_current_active_user),
+):
+    _html = html.replace(
+        "ws.send(input.value)",
+        f"ws.send('Sent by user: {current_user.email} ' + input.value)"
+    )
+    return HTMLResponse(_html)
 
 
 @router.websocket("/ws")
