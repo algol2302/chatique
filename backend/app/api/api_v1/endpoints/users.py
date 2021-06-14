@@ -121,12 +121,10 @@ def create_user_open(
             detail="Open user registration is forbidden on this server",
         )
 
-    user = crud.user.get_by_email(db, email=email)
-
-    if user:
+    if crud.user.get_by_email(db, email=email):
         raise HTTPException(
             status_code=400,
-            detail="The user with this username already exists in the system",
+            detail="The user with this email already exists in the system",
         )
 
     company = crud.company.get_by_name(db=db, name=company_name)
