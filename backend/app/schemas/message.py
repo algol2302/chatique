@@ -8,7 +8,7 @@ from pydantic import BaseModel
 class MessageBase(BaseModel):
     id: Optional[UUID] = None
     room_id: UUID
-    txt: str
+    text: str
 
 
 # Properties to receive via API on creation
@@ -18,7 +18,8 @@ class MessageCreate(MessageBase):
 
 # Properties to receive via API on update
 class MessageUpdate(MessageBase):
-    pass
+    id: UUID
+    room_id: Optional[UUID] = None
 
 
 class MessageInDBBase(MessageBase):

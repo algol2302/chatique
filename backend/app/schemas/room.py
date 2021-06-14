@@ -18,7 +18,8 @@ class RoomCreate(RoomBase):
 
 # Properties to receive via API on update
 class RoomUpdate(RoomBase):
-    pass
+    id: UUID
+    company_id: Optional[UUID] = None
 
 
 class RoomInDBBase(RoomBase):
